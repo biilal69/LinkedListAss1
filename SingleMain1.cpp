@@ -15,6 +15,8 @@ public:
 
     Student(const string& name_, int id_, double gpa_)
         : name(name_), id(id_), gpa(gpa_) {}
+    Student(const Student& other)
+        : name(other.name), id(other.id), gpa(other.gpa), next(nullptr) {}
 };
 
 
@@ -47,9 +49,9 @@ public:
         count++;
     }
 
-    bool remove(int id) {
-        if (!head) return false;
-        if (head->data.id == id) {
+    bool remove(int id1) {
+        if (head==NULL) return false;
+        if (head->id == id1) {
             Student* temp = head;
             head = head->next;
             delete temp;
@@ -57,37 +59,39 @@ public:
             return true;
         }
         Student* cur = head;
-        while (cur->next && cur->next->data.id != id) {
+        while (cur->next !=NULL && cur->next->id != id1) {
             cur = cur->next;
         }
-        if (cur->next && cur->next->data.id == id) {
+        if (cur->next!=NULL && cur->next->id == id1) {
             Student* temp = cur->next;
             cur->next = temp->next;
             delete temp;
             count--;
             return true;
         }
-        return false;  // لم يُعثر
+        return false; 
     }
 
-    Student* search(int id) {
-        Node* cur = head;
-        while (cur) {
-            if (cur->data.id == id) {
-                return &(cur->data);
+    Student* search(int id1) {
+        Student* cur = head;
+
+        while (cur!=NULL) {
+            if (cur->id == id1) {
+                Student& d = *cur;
+                return &d;
             }
-            cur = cur->next;
+           cur = cur->next;
         }
         return nullptr;
     }
 
     void display() const {
         cout << "Student List (size=" << count << "):\n";
-        Node* cur = head;
-        while (cur) {
-            cout << "Name: " << cur->data.name
-                 << ", ID: " << cur->data.id
-                 << ", GPA: " << cur->data.gpa << "\n";
+        Student* cur = head;
+        while (cur != NULL) {
+            cout << "Name: " << cur->name
+                 << ", ID: " << cur->id
+                 << ", GPA: " << cur->gpa << "\n";
             cur = cur->next;
         }
     }
