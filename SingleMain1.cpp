@@ -19,34 +19,28 @@ public:
 
 
 
-class StudentList {
+class StudentList  {
 private:
-    Node* head;
+    Student* head;
     int count;
 
 public:
     StudentList() : head(nullptr), count(0) {}
-    ~StudentList() {
-        Node* cur = head;
-        while (cur) {
-            Node* temp = cur->next;
-            delete cur;
-            cur = temp;
-        }
-    }
+    ~StudentList(){}
+    
 
     void insert(const Student& s) {
-        // أولاً: تأكد إذا نفس الـ ID ما موجود — إذا تحب
-        Node* newNode = new Node(s);
-        if (!head || s.id < head->data.id) {
+        
+        Student* newNode = new Student(s);
+        if (head==nullptr || s.id < head->id) {
             newNode->next = head;
             head = newNode;
         } else {
-            Node* cur = head;
-            while (cur->next && cur->next->data.id < s.id) {
+            Student* cur = head;
+            while (cur->next!=NULL && cur->next->id < s.id) {
                 cur = cur->next;
             }
-            // ممكن نتحقق إذا cur->next و cur->next->data.id == s.id → رفض/تحديث
+            
             newNode->next = cur->next;
             cur->next = newNode;
         }
@@ -56,18 +50,18 @@ public:
     bool remove(int id) {
         if (!head) return false;
         if (head->data.id == id) {
-            Node* temp = head;
+            Student* temp = head;
             head = head->next;
             delete temp;
             count--;
             return true;
         }
-        Node* cur = head;
+        Student* cur = head;
         while (cur->next && cur->next->data.id != id) {
             cur = cur->next;
         }
         if (cur->next && cur->next->data.id == id) {
-            Node* temp = cur->next;
+            Student* temp = cur->next;
             cur->next = temp->next;
             delete temp;
             count--;
