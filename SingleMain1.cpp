@@ -8,18 +8,16 @@ public:
     string name;
     int id;
     double gpa;
+    Student* next;
 
-    Student() : name(""), id(0), gpa(0){}
+
+    Student() : name(""), id(0), gpa(0),next(NULL){}
 
     Student(const string& name_, int id_, double gpa_)
         : name(name_), id(id_), gpa(gpa_) {}
 };
 
-struct Node {
-    Student data;
-    Node* next;
-    Node(const Student& s) : data(s), next(nullptr) {}
-    };
+
 
 class StudentList {
 private:
