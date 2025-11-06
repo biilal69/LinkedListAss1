@@ -115,6 +115,18 @@ public:
             delete cur;
         }
     }
+    void subString(int start , int len)
+    {
+        Node* cur =head;
+        for(int i =0 ; i<start ;i++)
+        {
+            cur=cur->next;
+        }
+        for(int i = 0 ; i<len ;i++){
+            cout<<cur->letter;
+            cur=cur->next;
+        }
+    }
     void display()
     {
         Node * cur = head;
@@ -136,5 +148,7 @@ int main() {
     obj.insertCH('X',5);
     obj.deletion(5);
     obj.display( );
+    obj.subString(3,3);
+    
     return 0;
 }
