@@ -3,84 +3,114 @@
 using namespace std;
 
 struct Node {
-char letter;
-Node* prev;
-Node* next;
+    char letter;
+    Node* prev;
+    Node* next;
 };
 
 class Dll{
-Node * head ;
-Node * tail;
-string s;
-int count;
+    Node * head ;
+    Node * tail;
+    string s;
+    int count;
 
 public:
-Dll():head(nullptr) , tail (nullptr) ,s(" "){}
-Dll(string str):head(nullptr),tail(nullptr),s{str}{listInitialize();}
-~Dll(){}
+    Dll():head(nullptr) , tail (nullptr) ,s(" "){}
+    Dll(string str):head(nullptr),tail(nullptr),s{str}{listInitialize();}
+    ~Dll(){}
 
-void listInitialize()
-{ 
-    Node * NewNode = new Node();
-    head = tail =NewNode;
+    void listInitialize()
+    {
+    count=s.length();
 
- for(int i = 0  ; i < s.length()-1;i++)
-    {
-        insertCH(s[i],i);
-    }
-}
-
-void insertCH(char c , int pos)
-{
-   Node* newNode = new Node;
-   newNode->letter = c;
-   
-   
-   
-     if(pos == 0 )
-    {newNode->next=head;
-    head->prev=newNode;
-    newNode->prev=nullptr;
-    head=newNode;
-    }
-    else if (pos==s.length())
-    {
-        newNode->prev=tail;
-        newNode->next=nullptr;
-        tail->next=newNode;
-        tail=newNode;
-    }
-    else 
-    {
-        Node* cur = new Node;
-        for(int i = 0 ; i<pos ;i++)
+        for(int i = s.length(); i>=0 ;i--)
         {
-            cur=cur->next;
+            insertFront(s[i]);
         }
-        newNode->next=cur;
-        newNode->prev=cur->prev;
-        cur->prev=newNode;
     }
-    
+    void insertFront(char c)
+    { if(head==nullptr)
+    {
+        Node* newNode = new Node;
+        newNode->letter = c;
+        newNode->next = nullptr;
+        newNode->prev = nullptr;
+        head=newNode;
+        tail=newNode;
+        return;
+    }
+    else
+    {Node* newNode = new Node;
+        newNode->letter = c;
+        newNode->next=head;
+        newNode->prev=nullptr;
+        head->prev=newNode;
+        head=newNode;}
+    }
 
-}
-void display()
+    void insertCH(char c , int pos)
+    {
+        Node* newNode = new Node;
+        newNode->letter = c;
+
+
+
+        if(pos == 0 )
+        {
+            newNode->next=head;
+            head->prev=newNode;
+            newNode->prev=nullptr;
+            head=newNode;
+        }
+        else if (pos==count)
+        {
+
+           newNode->prev=tail;
+            tail->next=newNode;
+            newNode->next=nullptr;
+            tail=newNode;
+
+        }
+
+        else
+        {
+            Node* cur = head;
+            for(int i = 0 ; i<pos ;i++)
+            {
+                cur=cur->next;
+            }
+            newNode->next=cur;
+            cur->prev->next=newNode;
+            newNode->prev=cur->prev;
+            cur->prev=newNode;
+        }
+    count++;
+
+    }
+    void display()
     {
         Node * cur = head;
-       cout<<cur->letter;
-       
+
         while(cur!=nullptr){
-            cout<<cur->letter<<" ";
+            cout<<cur->letter;
             cur = cur ->next;
-            
+
         }
+    cout<<endl;
     }
 
 };
 
 int main() {
-   Dll obj("hello");
-   cout << "Doubly Linked List contents: ";
-   obj.display( );
+    Dll obj("hello");
+    cout << "Doubly Linked List contents: ";
+    obj.display( );
+    // obj.insertCH('z',0);
+    // obj.insertCH('z',0);
+     obj.insertCH('z',1);
+     obj.insertCH('z',5);
+     obj.insertCH('P',5);
+      obj.insertCH('7',4);
+    obj.display( );
     return 0;
 }
