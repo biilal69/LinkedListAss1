@@ -87,6 +87,34 @@ public:
     count++;
 
     }
+    void deletion(int pos)
+    {
+        if(pos==0)
+        {
+            Node* temp = head;
+            head=head->next;
+            head->prev=nullptr;
+            delete temp;
+        }
+        else if (pos==count-1)
+        {
+            Node* temp = tail;
+            tail=tail->prev;
+            tail->next=nullptr;
+            delete temp;
+        }
+        else
+        {
+            Node* cur = head;
+            for(int i = 0 ; i<pos ;i++)
+            {
+                cur=cur->next;
+            }
+            cur->prev->next=cur->next;
+            cur->next->prev=cur->prev;
+            delete cur;
+        }
+    }
     void display()
     {
         Node * cur = head;
@@ -105,12 +133,8 @@ int main() {
     Dll obj("hello");
     cout << "Doubly Linked List contents: ";
     obj.display( );
-    // obj.insertCH('z',0);
-    // obj.insertCH('z',0);
-     obj.insertCH('z',1);
-     obj.insertCH('z',5);
-     obj.insertCH('P',5);
-      obj.insertCH('7',4);
+    obj.insertCH('X',5);
+    obj.deletion(5);
     obj.display( );
     return 0;
 }
